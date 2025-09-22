@@ -49,6 +49,7 @@ class HomeScreen extends StatelessWidget {
             tooltip: 'Logout',
             onPressed: () {
               // TODO: Handle logout
+            Navigator.pop(context);
             },
             icon: const Icon(Icons.logout),
           ),
@@ -164,6 +165,7 @@ class _AppDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 // TODO: handle logout
+                Navigator.pop(context);
               },
             ),
           ],
@@ -261,7 +263,7 @@ class _SearchBar extends StatelessWidget {
         hintText: 'Search anything…',
         prefixIcon: const Icon(Icons.search),
         filled: true,
-        fillColor: color.surfaceVariant.withOpacity(0.6),
+        fillColor: color.surfaceContainerHighest.withOpacity(0.6),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
@@ -299,7 +301,7 @@ class _QuickStatsRow extends StatelessWidget {
         curve: Curves.easeOut,
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: color.surfaceVariant.withOpacity(0.6),
+          color: color.surfaceContainerHighest.withOpacity(0.6),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: color.outlineVariant),
         ),
