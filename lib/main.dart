@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import 'app/app_theme.dart';
+import 'app/app_router.dart';
 
-
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const LoginScreen(),
+      title: 'Demo',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      routerConfig: appRouter, // perhatikan nama variabel router-nya
     );
   }
 }
