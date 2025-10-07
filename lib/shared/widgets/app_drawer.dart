@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pemrograman_mobile/features/auth/data/datasources/session_local_data_source.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -61,9 +62,10 @@ class AppDrawer extends StatelessWidget {
               () => context.go('/feedback'),
             ),
             const Divider(),
-            _tile(context, Icons.logout, 'Logout', () {
-              Navigator.pop(context);
-              Navigator.maybePop(context);
+            _tile(context, Icons.logout, 'Logout', () async {
+              Navigator.pop(context); // nutup drawer (ini aman)
+              await SessionLocalDataSource().clear(); // hapus 'loggedInUser'
+              if (context.mounted) context.go('/login');
             }),
           ],
         ),
