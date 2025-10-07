@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'app/app_theme.dart';
 import 'app/app_router.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // WAJIB sebelum pakai SharedPreferences
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
