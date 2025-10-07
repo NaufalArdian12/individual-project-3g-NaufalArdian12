@@ -1,4 +1,9 @@
 import 'package:go_router/go_router.dart';
+import 'package:pemrograman_mobile/features/expenses/domain/models/category.dart';
+import 'package:pemrograman_mobile/features/expenses/presentation/widgets/add_expense_screen.dart';
+import 'package:pemrograman_mobile/features/expenses/presentation/widgets/category_screen.dart';
+import 'package:pemrograman_mobile/features/expenses/presentation/widgets/edit_expense_screen.dart';
+import 'package:pemrograman_mobile/features/expenses/presentation/widgets/statistics_screen.dart';
 
 // Screens
 import '../features/home/presentation/screens/home_screen.dart';
@@ -26,6 +31,15 @@ final appRouter = GoRouter(
       name: 'register',
       builder: (c, s) => const RegisterScreen(),
     ),
+
+    // Expense Feature
+    GoRoute(path: '/add-expense', builder: (_, __) => const AddExpenseScreen()),
+    GoRoute(
+      path: '/edit-expense',
+      builder: (_, __) => const EditExpenseScreen(),
+    ),
+    GoRoute(path: '/statistics', builder: (_, __) => const StatisticsScreen()),
+    GoRoute(path: '/categories', builder: (_, __) => const CategoryScreen()),
 
     // Tambahan route lain
     GoRoute(
