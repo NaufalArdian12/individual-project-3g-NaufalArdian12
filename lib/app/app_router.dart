@@ -1,5 +1,4 @@
 import 'package:go_router/go_router.dart';
-import 'package:pemrograman_mobile/features/expenses/domain/models/category.dart';
 import 'package:pemrograman_mobile/features/expenses/presentation/widgets/add_expense_screen.dart';
 import 'package:pemrograman_mobile/features/expenses/presentation/widgets/category_screen.dart';
 import 'package:pemrograman_mobile/features/expenses/presentation/widgets/edit_expense_screen.dart';
@@ -7,8 +6,8 @@ import 'package:pemrograman_mobile/features/expenses/presentation/widgets/statis
 
 // Screens
 import '../features/home/presentation/screens/home_screen.dart';
-import '../screens/login_screen.dart';
-import '../screens/register_screen.dart';
+import '../features/auth/presentation/screens/login_screen.dart';
+import '../features/auth/presentation/screens/register_screen.dart';
 import '../features/messages/presentation/screens/messages_screen.dart';
 import '../features/messages/presentation/screens/message_detail_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
