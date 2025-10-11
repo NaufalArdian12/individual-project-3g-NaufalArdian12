@@ -56,7 +56,7 @@ class _StatHeader extends StatelessWidget {
     final c = Theme.of(context).colorScheme;
     return Card(
       elevation: 0,
-      color: c.surfaceVariant.withOpacity(0.5),
+      color: c.surfaceContainerHighest.withOpacity(0.5),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(

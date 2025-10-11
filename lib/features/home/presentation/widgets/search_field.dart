@@ -6,7 +6,7 @@ class HomeSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Theme.of(context).colorScheme;
-    final bg = (c.brightness == Brightness.light) ? c.surface.withOpacity(0.6) : c.surfaceVariant.withOpacity(0.6);
+    final bg = (c.brightness == Brightness.light) ? c.surface.withOpacity(0.6) : c.surfaceContainerHighest.withOpacity(0.6);
 
     return TextField(
       decoration: InputDecoration(
