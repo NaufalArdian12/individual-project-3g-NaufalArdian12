@@ -6,13 +6,27 @@ class MessagesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final query = GoRouterState.of(context).extra is Map
-        ? (GoRouterState.of(context).extra as Map)['query'] as String?
-        : null;
+    final query =
+        GoRouterState.of(context).extra is Map
+            ? (GoRouterState.of(context).extra as Map)['query'] as String?
+            : null;
 
-    final messages = List.generate(20, (i) => {'id': '$i', 'title': 'Message #$i', 'snippet': 'Preview of message $i'})
-        .where((m) => query == null || query.isEmpty ? true : m['title']!.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    final messages =
+        List.generate(
+              20,
+              (i) => {
+                'id': '$i',
+                'title': 'Message #$i',
+                'snippet': 'Preview of message $i',
+              },
+            )
+            .where(
+              (m) =>
+                  query == null || query.isEmpty
+                      ? true
+                      : m['title']!.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Messages')),
@@ -23,8 +37,10 @@ class MessagesScreen extends StatelessWidget {
         itemBuilder: (context, i) {
           final m = messages[i];
           return ListTile(
-            title: Text(m['title']!), subtitle: Text(m['snippet']!),
-            leading: const Icon(Icons.mail_outline), trailing: const Icon(Icons.chevron_right),
+            title: Text(m['title']!),
+            subtitle: Text(m['snippet']!),
+            leading: const Icon(Icons.mail_outline),
+            trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go('/message/${m['id']}'),
           );
         },

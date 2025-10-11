@@ -8,7 +8,9 @@ class HelpScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Help')),
       body: const Padding(
         padding: EdgeInsets.all(16),
-        child: Text('FAQ & Help Center\n\n• Using dashboard\n• Managing profile\n• Messages & settings\n\nContact: support@example.com'),
+        child: Text(
+          'FAQ & Help Center\n\n• Using dashboard\n• Managing profile\n• Messages & settings\n\nContact: support@example.com',
+        ),
       ),
     );
   }
