@@ -106,7 +106,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<String>(
-            value: _category,
+            initialValue: _category,
             items: _categories.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
             onChanged: (v) => setState(() => _category = v),
             decoration: const InputDecoration(

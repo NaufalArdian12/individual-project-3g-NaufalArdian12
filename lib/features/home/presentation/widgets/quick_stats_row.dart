@@ -13,7 +13,7 @@ class QuickStatsRow extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: c.surfaceVariant.withOpacity(0.4),
+          color: c.surfaceContainerHighest.withOpacity(0.4),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: c.outlineVariant),
         ),
