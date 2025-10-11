@@ -24,22 +24,42 @@ class DashboardCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
-            begin: Alignment.topLeft, end: Alignment.bottomRight,
-            colors: [item.color.withOpacity(0.15), c.primaryContainer.withOpacity(0.25)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              item.color.withOpacity(0.15),
+              c.primaryContainer.withOpacity(0.25),
+            ],
           ),
           border: Border.all(color: c.outlineVariant),
         ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            decoration: BoxDecoration(color: item.color.withOpacity(0.2), shape: BoxShape.circle),
-            padding: const EdgeInsets.all(12),
-            child: Icon(item.icon, size: 28, color: item.color),
-          ),
-          const Spacer(),
-          Text(item.title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-          const SizedBox(height: 6),
-          Text('Tap to open', style: Theme.of(context).textTheme.labelMedium?.copyWith(color: c.onSurfaceVariant)),
-        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: item.color.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              padding: const EdgeInsets.all(12),
+              child: Icon(item.icon, size: 28, color: item.color),
+            ),
+            const Spacer(),
+            Text(
+              item.title,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Tap to open',
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(color: c.onSurfaceVariant),
+            ),
+          ],
+        ),
       ),
     );
   }
