@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:math';
+import '../../../../shared/widgets/expense_animations.dart';
+import '../../../../src/features/statistics/providers/expenses_providers.dart';
 
-class StatisticsScreen extends StatelessWidget {
+class StatisticsScreen extends ConsumerWidget {
   const StatisticsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // UI-only dummy data
-    final byCategory = {
-      'Makanan': 350000.0,
-      'Transport': 120000.0,
-      'Tagihan': 420000.0,
-      'Hiburan': 180000.0,
-    };
-    final total = byCategory.values.fold<double>(0, (a, b) => a + b);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final byCategory = ref.watch(byCategoryProvider);
+    final total = ref.watch(totalExpenseProvider);
+    final count = ref.watch(transactionCountProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Statistics'),
+        leading: IconButton(
+          tooltip: 'Back',
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            final router = GoRouter.of(context);
+            if (router.canPop()) {
+              router.pop();
+            } else {
+              router.go('/'); 
+            }
+          },
+        ),
         actions: [
           IconButton(
             tooltip: 'Export CSV (dummy)',
             onPressed: () {
-              // UI-only: tampilkan snackbar saja
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Exported CSV (UI only)')),
               );
@@ -31,14 +41,30 @@ class StatisticsScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _StatHeader(total: total, count: 24),
-          const SizedBox(height: 16),
-          _BarCard(title: 'By Category (Dummy)', data: byCategory),
-          const SizedBox(height: 16),
-          _MonthlyCard(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                SlideInAnimation(
+                  delay: const Duration(milliseconds: 100),
+                  child: _StatHeader(total: total, count: count),
+                ),
+                const SizedBox(height: 16),
+                SlideInAnimation(
+                  delay: const Duration(milliseconds: 200),
+                  child: _BarCard(title: 'By Category', data: byCategory),
+                ),
+                const SizedBox(height: 16),
+                SlideInAnimation(
+                  delay: const Duration(milliseconds: 300),
+                  child: const _MonthlyCard(),
+                ),
+                const SizedBox(height: 16),
+              ]),
+            ),
+          ),
         ],
       ),
     );
@@ -52,28 +78,51 @@ class _StatHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    final c = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
     return Card(
-      elevation: 0,
-      color: c.surfaceContainerHighest.withOpacity(0.5),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              colorScheme.primary.withOpacity(0.1),
+              colorScheme.secondary.withOpacity(0.05),
+            ],
+          ),
+        ),
         child: Row(
           children: [
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Total Pengeluaran',
-                    style: t.labelMedium?.copyWith(color: c.onSurfaceVariant),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.trending_down,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Total Expenses',
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
                     'Rp ${total.toStringAsFixed(0)}',
-                    style: t.headlineSmall?.copyWith(
+                    style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -82,14 +131,29 @@ class _StatHeader extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  'Jumlah Transaksi',
-                  style: t.labelMedium?.copyWith(color: c.onSurfaceVariant),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.receipt_long,
+                      color: colorScheme.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Transactions',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 8),
                 Text(
                   '$count',
-                  style: t.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
                 ),
               ],
             ),
@@ -159,9 +223,10 @@ class _BarCard extends StatelessWidget {
 }
 
 class _MonthlyCard extends StatelessWidget {
+  const _MonthlyCard();
+
   @override
   Widget build(BuildContext context) {
-    // 6 bulan terakhir (dummy)
     final months = ['Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'];
     final values =
         [
@@ -205,10 +270,9 @@ class _MonthlyCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.7),
+                            ).colorScheme.primary.withValues(alpha: 0.7),
                           ),
                         ),
-                        const SizedBox(height: 6),
                         Text(months[i]),
                       ],
                     ),

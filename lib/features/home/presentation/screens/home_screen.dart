@@ -1,106 +1,162 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../shared/widgets/app_drawer.dart';
-import '../widgets/greeting_header.dart';
-import '../widgets/search_field.dart';
-import '../widgets/quick_stats_row.dart';
-import '../widgets/dashboard_card.dart';
+import '../../../../shared/widgets/expense_animations.dart';
+import '../widgets/expense_overview_card.dart';
+import '../widgets/quick_action_buttons.dart';
+import '../widgets/recent_transactions_list.dart';
+import '../widgets/monthly_chart_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static final items = [
-    DashboardItem('Profile', Icons.person, Colors.green, '/profile'),
-    DashboardItem('Messages', Icons.message, Colors.orange, '/messages'),
-    DashboardItem('Settings', Icons.settings, Colors.purple, '/settings'),
-    DashboardItem('Help', Icons.help, Colors.red, '/help'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: color.surface,
+      backgroundColor: isDark ? Colors.grey.shade900 : Colors.grey.shade50,
       appBar: AppBar(
-        title: const Text('Home'),
-        scrolledUnderElevation: 2,
-        backgroundColor: color.surface,
-        foregroundColor: color.onSurface,
+        title: const Text('Expense Tracker'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           IconButton(
             tooltip: 'Notifications',
-            onPressed:
-                () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('No new notifications')),
-                ),
+            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('No new notifications')),
+            ),
             icon: const Icon(Icons.notifications_outlined),
           ),
           PopupMenuButton<String>(
-            itemBuilder:
-                (c) => const [
-                  PopupMenuItem(value: 'about', child: Text('About')),
-                  PopupMenuItem(
-                    value: 'feedback',
-                    child: Text('Send Feedback'),
-                  ),
-                ],
-            onSelected: (v) => context.go('/$v'),
-          ),
-          IconButton(
-            tooltip: 'Logout',
-            onPressed: () {
-              // UI-only: clear ke login
-              context.go('/login');
+            itemBuilder: (c) => [
+              const PopupMenuItem(
+                value: 'settings',
+                child: Row(
+                  children: [
+                    Icon(Icons.settings_outlined),
+                    SizedBox(width: 12),
+                    Text('Settings'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'about',
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline),
+                    SizedBox(width: 12),
+                    Text('About'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: [
+                    Icon(Icons.logout),
+                    SizedBox(width: 12),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+            ],
+            onSelected: (value) {
+              if (value == 'logout') {
+                context.go('/login');
+              } else {
+                context.go('/$value');
+              }
             },
-            icon: const Icon(Icons.logout),
           ),
         ],
       ),
       drawer: const AppDrawer(),
       body: CustomScrollView(
         slivers: [
+          // Welcome Section
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  GreetingHeader(),
-                  SizedBox(height: 16),
-                  HomeSearchField(),
-                  SizedBox(height: 16),
-                  QuickStatsRow(),
-                  SizedBox(height: 8),
-                ],
+            child: SlideInAnimation(
+              delay: const Duration(milliseconds: 100),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Good ${_getGreeting()}!',
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Let\'s track your expenses today',
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            sliver: SliverLayoutBuilder(
-              builder: (context, constraints) {
-                final w = constraints.crossAxisExtent;
-                final cross = w >= 1100 ? 4 : (w >= 800 ? 3 : 2);
-                return SliverGrid.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: cross,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 1.1,
-                  ),
-                  itemCount: items.length,
-                  itemBuilder:
-                      (c, i) => DashboardCard(
-                        item: items[i],
-                        onTap: () => context.go(items[i].route),
-                      ),
-                );
-              },
+
+          // Overview Cards
+          SliverToBoxAdapter(
+            child: SlideInAnimation(
+              delay: const Duration(milliseconds: 200),
+              child: const ExpenseOverviewCard(),
             ),
           ),
+
+          // Monthly Chart
+          SliverToBoxAdapter(
+            child: SlideInAnimation(
+              delay: const Duration(milliseconds: 300),
+              child: const MonthlyChartCard(),
+            ),
+          ),
+
+          // Quick Actions
+          SliverToBoxAdapter(
+            child: SlideInAnimation(
+              delay: const Duration(milliseconds: 400),
+              child: const QuickActionButtons(),
+            ),
+          ),
+
+          // Recent Transactions
+          SliverToBoxAdapter(
+            child: SlideInAnimation(
+              delay: const Duration(milliseconds: 500),
+              child: const RecentTransactionsList(),
+            ),
+          ),
+
+          const SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
       ),
+      floatingActionButton: ScaleInAnimation(
+        delay: const Duration(milliseconds: 600),
+        child: FloatingActionButton.extended(
+          onPressed: () => context.go('/add-expense'),
+          icon: const Icon(Icons.add),
+          label: const Text('Add Expense'),
+          backgroundColor: colorScheme.primary,
+          foregroundColor: Colors.white,
+        ),
+      ),
     );
+  }
+
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Morning';
+    if (hour < 17) return 'Afternoon';
+    return 'Evening';
   }
 }
