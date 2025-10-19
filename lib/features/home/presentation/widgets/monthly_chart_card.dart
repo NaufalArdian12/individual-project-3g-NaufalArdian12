@@ -7,8 +7,6 @@ class MonthlyChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Card(
@@ -35,7 +33,7 @@ class MonthlyChartCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
+                      color: Colors.green.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -113,7 +111,7 @@ class MonthlyChartCard extends StatelessWidget {
           width: 30,
           height: height,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.8),
+            color: color.withValues(alpha: 0.8),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
           ),
         ),
@@ -134,7 +132,7 @@ class MonthlyChartCard extends StatelessWidget {
         Text(
           label,
           style: theme.textTheme.labelSmall?.copyWith(
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(height: 4),

@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'Manage your finances smartly',
                         style: theme.textTheme.bodyLarge?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ),

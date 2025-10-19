@@ -58,7 +58,10 @@ class MyApp extends ConsumerWidget {
           ),
           filled: true,
           fillColor: Colors.grey.shade50,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
         ),
         cardTheme: CardThemeData(
           elevation: 0,
@@ -69,7 +72,8 @@ class MyApp extends ConsumerWidget {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           elevation: 0,
-          shape: CircleBorder(),
+          shape: StadiumBorder(),
+          extendedPadding: EdgeInsets.symmetric(horizontal: 10),
         ),
       ),
       darkTheme: ThemeData(
@@ -110,7 +114,10 @@ class MyApp extends ConsumerWidget {
           ),
           filled: true,
           fillColor: Colors.grey.shade800,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
         ),
         cardTheme: CardThemeData(
           elevation: 0,
@@ -119,9 +126,11 @@ class MyApp extends ConsumerWidget {
           ),
           color: Colors.grey.shade800,
         ),
+
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           elevation: 0,
-          shape: CircleBorder(),
+          shape: StadiumBorder(),
+          extendedPadding: EdgeInsets.symmetric(horizontal: 10),
         ),
       ),
       themeMode: mode,

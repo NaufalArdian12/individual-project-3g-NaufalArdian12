@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../shared/widgets/ink_scale.dart';
-import '../../../../shared/widgets/animated_card.dart';
 
 class DashboardItem {
   final String title;
@@ -32,7 +30,7 @@ class DashboardCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: item.color.withOpacity(0.1),
+                  color: item.color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -56,7 +54,7 @@ class DashboardCard extends StatelessWidget {
               Text(
                 'Tap to open',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: c.onSurface.withOpacity(0.6),
+                  color: c.onSurface.withValues(alpha: 0.6),
                 ),
               ),
             ],

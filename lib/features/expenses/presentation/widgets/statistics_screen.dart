@@ -90,8 +90,8 @@ class _StatHeader extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              colorScheme.primary.withOpacity(0.1),
-              colorScheme.secondary.withOpacity(0.05),
+              colorScheme.primary.withValues(alpha: 0.1),
+              colorScheme.secondary.withValues(alpha: 0.05),
             ],
           ),
         ),
@@ -112,7 +112,7 @@ class _StatHeader extends StatelessWidget {
                       Text(
                         'Total Expenses',
                         style: theme.textTheme.labelMedium?.copyWith(
-                          color: colorScheme.onSurface.withOpacity(0.7),
+                          color: colorScheme.onSurface.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -142,7 +142,7 @@ class _StatHeader extends StatelessWidget {
                     Text(
                       'Transactions',
                       style: theme.textTheme.labelMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
