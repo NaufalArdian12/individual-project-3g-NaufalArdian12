@@ -96,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       'Let\'s track your expenses today',
                       style: theme.textTheme.bodyLarge?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.7),
+                        color: colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
