@@ -143,9 +143,22 @@ flutter build ios --release
 ---
 
 ## 📸 Screenshots
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="docs/categories.png" width="250"/></td>
+      <td><img src="docs/home.png" width="250"/></td>
+    </tr>
+  </table>
 
-<table> <tr> <td><img src="docs/categories.png" width="250"/></td> <td><img src="docs/home.png" width="250"/></td> </tr> </table>
-<table> <tr> <td><img src="docs/settings.png" width="250"/></td> <td><img src="docs/statistics.png" width="250"/></td> </tr> </table>
+  <table>
+    <tr>
+      <td><img src="docs/settings.png" width="250"/></td>
+      <td><img src="docs/statistics.png" width="250"/></td>
+    </tr>
+  </table>
+</p>
+
 
 ## 🤝 Contributing
 
